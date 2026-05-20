@@ -1,0 +1,33 @@
+name: wannadi
+description: >-
+  Paquete compartido de SIGMA — un kit de UI Material 3 (listas con vistas
+  alternables cards / tiles / tabla / kanban, helpers responsivos, paletas
+  conmutables, cards, shimmer) y una cola offline local-first (outbox en
+  SQLite con flush HTTP reintentable). `package:wannadi/wannadi.dart` para
+  la UI; `package:wannadi/queue.dart` para la cola.
+version: 1.0.0
+repository: https://gitea.gioser.net/sergio/wannadi-flutter
+issue_tracker: https://gitea.gioser.net/sergio/wannadi-flutter/issues
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.2
+  go_router: ^17.2.0
+  shared_preferences: ^2.3.0
+  http: ^1.0.0
+  sqflite: ^2.4.0
+  sqflite_common_ffi: ^2.4.0
+  uuid: ^4.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
