@@ -372,69 +372,94 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    return Row(
-      children: [
-        IconButton(
-          tooltip: 'Atrás',
-          onPressed: onBack ?? () => safeBack(context),
-          icon: const Icon(Icons.arrow_back_rounded),
-          style: IconButton.styleFrom(
-            backgroundColor: cs.sigmaMuted,
-            foregroundColor: cs.sigmaTextPrimary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+    return LayoutBuilder(builder: (context, c) {
+      // En paneles angostos (p. ej. la lista dentro de un master-detail,
+      // ~320 px) el ícono hero y el botón de acción comían el ancho y el
+      // título quedaba con tan poco espacio que se partía palabra por
+      // palabra. En compacto se retira el ícono hero y la acción se
+      // reduce a su signo "+".
+      final compact = c.maxWidth < 460;
+      final iconOnlyAction = c.maxWidth < 380;
+      return Row(
+        children: [
+          IconButton(
+            tooltip: 'Atrás',
+            onPressed: onBack ?? () => safeBack(context),
+            icon: const Icon(Icons.arrow_back_rounded),
+            style: IconButton.styleFrom(
+              backgroundColor: cs.sigmaMuted,
+              foregroundColor: cs.sigmaTextPrimary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.all(10),
             ),
-            padding: const EdgeInsets.all(10),
           ),
-        ),
-        const SizedBox(width: 12),
-        Container(
-          width: 52, height: 52,
-          decoration: BoxDecoration(
-            gradient: WannadiColors.gradientFor(color),
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: [
-              BoxShadow(
-                color: color.withValues(alpha: 0.3),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
+          const SizedBox(width: 12),
+          if (!compact) ...[
+            Container(
+              width: 52, height: 52,
+              decoration: BoxDecoration(
+                gradient: WannadiColors.gradientFor(color),
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [
+                  BoxShadow(
+                    color: color.withValues(alpha: 0.3),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Icon(icon, color: Colors.white, size: 24),
-        ),
-        const SizedBox(width: 14),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w900,
-                  color: cs.sigmaTextPrimary,
-                  letterSpacing: -0.3,
+              child: Icon(icon, color: Colors.white, size: 24),
+            ),
+            const SizedBox(width: 14),
+          ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w900,
+                    color: cs.sigmaTextPrimary,
+                    letterSpacing: -0.3,
+                  ),
                 ),
-              ),
-              Text(
-                '$count ${subtitle ?? "registros"}',
-                style: TextStyle(
-                  color: cs.sigmaTextSub,
-                  fontSize: 12,
+                Text(
+                  '$count ${subtitle ?? "registros"}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: cs.sigmaTextSub,
+                    fontSize: 12,
+                  ),
                 ),
+              ],
+            ),
+          ),
+          if (actionLabel != null && onAction != null) ...[
+            const SizedBox(width: 8),
+            if (iconOnlyAction)
+              IconButton.filled(
+                tooltip: actionLabel,
+                onPressed: onAction,
+                icon: const Icon(Icons.add_rounded),
+              )
+            else
+              FilledButton.icon(
+                onPressed: onAction,
+                icon: const Icon(Icons.add_rounded),
+                label: Text(actionLabel!),
               ),
-            ],
-          ),
-        ),
-        if (actionLabel != null && onAction != null)
-          FilledButton.icon(
-            onPressed: onAction,
-            icon: const Icon(Icons.add_rounded),
-            label: Text(actionLabel!),
-          ),
-      ],
-    );
+          ],
+        ],
+      );
+    });
   }
 }
 
