@@ -66,12 +66,17 @@ class ResponsiveTwoPane extends StatelessWidget {
       }
       return master;
     }
-    // Desktop/tablet: paneles lado a lado.
-    return Row(children: [
-      SizedBox(width: masterWidth, child: master),
-      const VerticalDivider(width: 1),
-      Expanded(child: detail),
-    ]);
+    // Desktop/tablet: paneles lado a lado. `stretch` da a ambos paneles
+    // la altura completa; sin él, un master más corto que el detail se
+    // centraba verticalmente (su título quedaba a media pantalla).
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(width: masterWidth, child: master),
+        const VerticalDivider(width: 1),
+        Expanded(child: detail),
+      ],
+    );
   }
 }
 
