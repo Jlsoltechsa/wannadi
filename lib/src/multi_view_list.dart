@@ -149,6 +149,14 @@ class MultiViewList extends StatefulWidget {
   /// kanban para flujos drag-drop). Default: `cards`.
   final MvViewMode initialView;
 
+  /// Clave que identifica unívocamente cada fila (p. ej. `'id'`). Junto a
+  /// [selectedId] permite resaltar el registro activo en master-detail.
+  final String? idKey;
+
+  /// Valor de [idKey] del registro actualmente seleccionado. La card / fila
+  /// que lo tenga se pinta resaltada. Si null, nada queda resaltado.
+  final Object? selectedId;
+
   const MultiViewList({
     super.key,
     required this.title,
@@ -169,6 +177,8 @@ class MultiViewList extends StatefulWidget {
     this.onMove,
     this.onBack,
     this.initialView = MvViewMode.cards,
+    this.idKey,
+    this.selectedId,
   });
 
   @override
@@ -271,6 +281,8 @@ class _MultiViewListState extends State<MultiViewList> {
                   badge: widget.badge,
                   onTap: widget.onTap,
                   isWide: isWide,
+                  idKey: widget.idKey,
+                  selectedId: widget.selectedId,
                 ),
               MvViewMode.tiles => _TilesView(
                   rows: filtered,
@@ -282,6 +294,8 @@ class _MultiViewListState extends State<MultiViewList> {
                   heroColor: widget.heroColor,
                   onTap: widget.onTap,
                   isWide: isWide,
+                  idKey: widget.idKey,
+                  selectedId: widget.selectedId,
                 ),
               MvViewMode.table  => _mvTableBuilder != null
                   ? _mvTableBuilder!(
@@ -314,6 +328,8 @@ class _MultiViewListState extends State<MultiViewList> {
                       }),
                       onPage: (p) => setState(() => _page = p),
                       onTap: widget.onTap,
+                      idKey: widget.idKey,
+                      selectedId: widget.selectedId,
                     ),
               MvViewMode.kanban => widget.groupBy == null
                   ? _TilesView(
@@ -518,6 +534,8 @@ class _CardsView extends StatelessWidget {
   final MvColumn? badge;
   final void Function(Map<String, dynamic>)? onTap;
   final bool isWide;
+  final String? idKey;
+  final Object? selectedId;
   const _CardsView({
     required this.rows,
     required this.primary,
@@ -525,6 +543,8 @@ class _CardsView extends StatelessWidget {
     required this.badge,
     required this.onTap,
     required this.isWide,
+    this.idKey,
+    this.selectedId,
   });
 
   @override
@@ -546,6 +566,8 @@ class _CardsView extends StatelessWidget {
                 secondary: secondary,
                 badge: badge,
                 onTap: onTap == null ? null : () => onTap!(row),
+                selected: idKey != null && selectedId != null &&
+                    row[idKey] == selectedId,
               ),
             ),
         ],
@@ -561,6 +583,7 @@ class _PersonaCard extends StatelessWidget {
   final MvColumn? secondary;
   final MvColumn? badge;
   final VoidCallback? onTap;
+  final bool selected;
 
   const _PersonaCard({
     required this.row,
@@ -568,6 +591,7 @@ class _PersonaCard extends StatelessWidget {
     required this.secondary,
     required this.badge,
     required this.onTap,
+    this.selected = false,
   });
 
   String _initials(String s) {
@@ -591,9 +615,14 @@ class _PersonaCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: cs.sigmaCard,
+            color: selected
+                ? WannadiColors.steel.withValues(alpha: 0.10)
+                : cs.sigmaCard,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: cs.sigmaBorder),
+            border: Border.all(
+              color: selected ? WannadiColors.steel : cs.sigmaBorder,
+              width: selected ? 1.5 : 1,
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha:
@@ -689,6 +718,7 @@ class _RichTile extends StatefulWidget {
   final Color accent;
   final VoidCallback? onTap;
   final bool dense;
+  final bool selected;
   const _RichTile({
     required this.row,
     required this.primary,
@@ -699,6 +729,7 @@ class _RichTile extends StatefulWidget {
     required this.accent,
     required this.onTap,
     this.dense = false,
+    this.selected = false,
   });
   @override
   State<_RichTile> createState() => _RichTileState();
@@ -768,9 +799,14 @@ class _RichTileState extends State<_RichTile> {
             duration: const Duration(milliseconds: 150),
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              color: cs.sigmaCard,
+              color: widget.selected
+                  ? widget.accent.withValues(alpha: 0.08)
+                  : cs.sigmaCard,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: cs.sigmaBorder),
+              border: Border.all(
+                color: widget.selected ? widget.accent : cs.sigmaBorder,
+                width: widget.selected ? 1.5 : 1,
+              ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withValues(alpha:
@@ -969,6 +1005,8 @@ class _TilesView extends StatelessWidget {
   final Color heroColor;
   final void Function(Map<String, dynamic>)? onTap;
   final bool isWide;
+  final String? idKey;
+  final Object? selectedId;
   const _TilesView({
     required this.rows,
     required this.primary,
@@ -979,6 +1017,8 @@ class _TilesView extends StatelessWidget {
     required this.heroColor,
     required this.onTap,
     required this.isWide,
+    this.idKey,
+    this.selectedId,
   });
 
   @override
@@ -1007,6 +1047,8 @@ class _TilesView extends StatelessWidget {
                 statColumn: statColumn,
                 accent: heroColor,
                 onTap: onTap == null ? null : () => onTap!(row),
+                selected: idKey != null && selectedId != null &&
+                    row[idKey] == selectedId,
               ),
             ),
         ],
@@ -1029,6 +1071,8 @@ class _TableView extends StatelessWidget {
   final void Function(String, bool) onSort;
   final ValueChanged<int> onPage;
   final void Function(Map<String, dynamic>)? onTap;
+  final String? idKey;
+  final Object? selectedId;
   const _TableView({
     required this.rows,
     required this.columns,
@@ -1039,6 +1083,8 @@ class _TableView extends StatelessWidget {
     required this.onSort,
     required this.onPage,
     required this.onTap,
+    this.idKey,
+    this.selectedId,
   });
 
   @override
@@ -1085,7 +1131,10 @@ class _TableView extends StatelessWidget {
               onTap: onTap == null ? null : () => onTap!(pageRows[i]),
               child: Container(
                 decoration: BoxDecoration(
-                  color: i.isEven ? cs.sigmaCard : cs.sigmaSurface,
+                  color: (idKey != null && selectedId != null &&
+                          pageRows[i][idKey] == selectedId)
+                      ? WannadiColors.steel.withValues(alpha: 0.10)
+                      : (i.isEven ? cs.sigmaCard : cs.sigmaSurface),
                   border: Border(bottom: BorderSide(color: cs.sigmaBorder)),
                 ),
                 child: SingleChildScrollView(
