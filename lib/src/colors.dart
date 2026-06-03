@@ -7,34 +7,34 @@ import 'package:flutter/material.dart';
 /// accent neutrales que los widgets usan como defaults. Si tu app necesita
 /// marca, configúrala vía paleta (`SigmaPalette`) en lugar de hardcodear.
 class WannadiColors {
-  // ── Marca por defecto (paleta clásica navy/ámbar; el host puede cambiarla
-  // vía paletas o pasando colores explícitos) ─────────────────────────────
-  static const navy        = Color(0xFF0E2452);
-  static const navyDeep    = Color(0xFF0A1B3D);
-  static const navyMid     = Color(0xFF1A3470);
-  static const steel       = Color(0xFF5C8AB5);
-  static const steelDeep   = Color(0xFF3F6A93);
+  // ── Marca por defecto — alineada al Manual de Marca SIGMA v1.0 (el host
+  // puede cambiarla vía paletas o pasando colores explícitos) ──────────────
+  static const navy        = Color(0xFF1F2A4E);  // navy.deep
+  static const navyDeep    = Color(0xFF15203C);  // derivado (gradientes)
+  static const navyMid     = Color(0xFF2C3A60);  // navy.halo
+  static const steel       = Color(0xFF5D8BB6);  // azul.brand
+  static const steelDeep   = Color(0xFF416F9A);  // azul.text
   static const steelLight  = Color(0xFFA9C2DA);
-  static const amber       = Color(0xFFEAAA2F);
+  static const amber       = Color(0xFFEAAA2F);  // dorado.brand
   static const amberLight  = Color(0xFFF4C463);
-  static const slate       = Color(0xFF5A6A8A);
-  static const mist        = Color(0xFF9AAAC4);
+  static const slate       = Color(0xFF6B7592);
+  static const mist        = Color(0xFF9AA3BC);
   static const ink         = Color(0xFF12182A);
 
-  // ── Semánticos ───────────────────────────────────────────────────────────
-  static const success     = Color(0xFF2BA876);
-  static const warning     = Color(0xFFE89A2D);
-  static const danger      = Color(0xFFD8584D);
+  // ── Semánticos (manual v1.0, capa 2) ─────────────────────────────────────
+  static const success     = Color(0xFF10B981);  // success.brand
+  static const warning     = Color(0xFFD97706);  // warning.brand
+  static const danger      = Color(0xFFDC2626);  // danger
   static const info        = Color(0xFF4D8AC0);
 
-  // ── Superficies ──────────────────────────────────────────────────────────
-  static const surface     = Color(0xFFF3F5FA);
+  // ── Superficies — neutros cálidos crema (manual 10.01) ───────────────────
+  static const surface     = Color(0xFFF4EFE5);  // crema.base
   static const surfaceCard = Color(0xFFFFFFFF);
-  static const surfaceMuted = Color(0xFFE7ECF4);
-  static const border      = Color(0xFFD9DEE9);
-  static const textPrimary = Color(0xFF12182A);
-  static const textSub     = Color(0xFF5A6A8A);
-  static const textMuted   = Color(0xFF8C99B0);
+  static const surfaceMuted = Color(0xFFE3DFD9);  // muted cálido
+  static const border      = Color(0xFFD6D3D0);  // borde cálido
+  static const textPrimary = Color(0xFF1F2A4E);  // navy.deep
+  static const textSub     = Color(0xFF6B7592);  // text-muted
+  static const textMuted   = Color(0xFF9AA3BC);  // text-soft
   static const snowWhite   = Color(0xFFFFFFFF);
 
   // ── Aliases ──────────────────────────────────────────────────────────────
