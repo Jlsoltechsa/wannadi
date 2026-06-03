@@ -188,26 +188,30 @@ void setPaletteColorsResolver(PaletteColors? Function(BuildContext) fn) {
 
 // ── Definiciones de paletas ─────────────────────────────────────────────────
 
+// Paleta oficial SIGMA — fiel al Manual de Marca v1.0 (capas 1 y 2 +
+// neutros cálidos crema de 10.01). Las demás paletas (ocean/forest/…) son
+// skins alternativas y NO siguen el manual a propósito.
 const _classic = PaletteColors(
-  brandDeep:   Color(0xFF0E2452),
-  brandAccent: Color(0xFFEAAA2F),
+  brandDeep:   Color(0xFF1F2A4E),  // navy.deep
+  brandAccent: Color(0xFFEAAA2F),  // dorado.brand
   light: ColorScheme(
     brightness: Brightness.light,
-    primary: Color(0xFF5C8AB5),  onPrimary: Color(0xFFFFFFFF),
-    primaryContainer: Color(0xFFD8E5F1), onPrimaryContainer: Color(0xFF0E2452),
-    secondary: Color(0xFFEAAA2F), onSecondary: Color(0xFF0E2452),
-    secondaryContainer: Color(0xFFFAE6BB), onSecondaryContainer: Color(0xFF0E2452),
-    tertiary: Color(0xFF0E2452), onTertiary: Color(0xFFFFFFFF),
-    tertiaryContainer: Color(0xFFCDD6E5), onTertiaryContainer: Color(0xFF0E2452),
-    error: Color(0xFFD8584D), onError: Color(0xFFFFFFFF),
-    errorContainer: Color(0xFFFADADA), onErrorContainer: Color(0xFF0E2452),
-    surface: Color(0xFFF3F5FA), onSurface: Color(0xFF12182A),
-    surfaceContainerHighest: Color(0xFFE7ECF4),
-    outline: Color(0xFFD9DEE9), outlineVariant: Color(0xFFE7ECF4),
+    primary: Color(0xFF5D8BB6),  onPrimary: Color(0xFFFFFFFF),       // azul.brand
+    primaryContainer: Color(0xFFD8E5F1), onPrimaryContainer: Color(0xFF1F2A4E),
+    secondary: Color(0xFFEAAA2F), onSecondary: Color(0xFF1F2A4E),    // dorado.brand
+    secondaryContainer: Color(0xFFFAE6BB), onSecondaryContainer: Color(0xFF1F2A4E),
+    tertiary: Color(0xFF1F2A4E), onTertiary: Color(0xFFFFFFFF),      // navy.deep
+    tertiaryContainer: Color(0xFFCDD6E5), onTertiaryContainer: Color(0xFF1F2A4E),
+    error: Color(0xFFDC2626), onError: Color(0xFFFFFFFF),            // danger
+    errorContainer: Color(0xFFFADADA), onErrorContainer: Color(0xFF1F2A4E),
+    surface: Color(0xFFF4EFE5), onSurface: Color(0xFF1F2A4E),        // crema.base / navy text
+    surfaceContainerHighest: Color(0xFFFAF7F0),                      // crema.light
+    onSurfaceVariant: Color(0xFF6B7592),                             // text-muted
+    outline: Color(0xFFD6D3D0), outlineVariant: Color(0xFFE3DFD9),   // bordes cálidos
   ),
   dark: ColorScheme(
     brightness: Brightness.dark,
-    primary: Color(0xFF5C8AB5),  onPrimary: Color(0xFF0A1430),
+    primary: Color(0xFF5D8BB6),  onPrimary: Color(0xFF0A1430),
     primaryContainer: Color(0xFF1B3A5C), onPrimaryContainer: Color(0xFFA9C2DA),
     secondary: Color(0xFFEAAA2F), onSecondary: Color(0xFF0A1430),
     secondaryContainer: Color(0xFF4D3A18), onSecondaryContainer: Color(0xFFF4C463),
