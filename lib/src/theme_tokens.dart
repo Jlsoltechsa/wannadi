@@ -31,6 +31,12 @@ extension WannadiSemanticColors on ColorScheme {
       brightness == Brightness.dark
           ? const Color(0xFF9AAAC4)
           : WannadiColors.textSub;
+  /// Texto "soft": más apagado que [sigmaTextSub], para labels y hints
+  /// secundarios. Equivale al `textMuted` de la paleta en light.
+  Color get sigmaTextSoft =>
+      brightness == Brightness.dark
+          ? const Color(0xFF7E8CA6)
+          : WannadiColors.textMuted;
 
   // Alias modernos (recomendados para apps nuevas).
   Color get wannadiSurface     => sigmaSurface;
@@ -39,4 +45,5 @@ extension WannadiSemanticColors on ColorScheme {
   Color get wannadiBorder      => sigmaBorder;
   Color get wannadiTextPrimary => sigmaTextPrimary;
   Color get wannadiTextSub     => sigmaTextSub;
+  Color get wannadiTextSoft    => sigmaTextSoft;
 }
