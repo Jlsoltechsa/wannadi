@@ -29,12 +29,17 @@ class MvColumn {
   final bool sortable;
   final double? width; // px en tabla
   final String Function(Map<String, dynamic>)? formatter;
+  /// Color opcional del badge según su texto ya formateado. Si devuelve
+  /// `null` (o no se define), el badge usa el `steel` por defecto. Útil
+  /// para estados: 'Activo' en verde, 'Vencido' en rojo, etc.
+  final Color? Function(String value)? badgeColorOf;
   const MvColumn({
     required this.key,
     required this.label,
     this.sortable = true,
     this.width,
     this.formatter,
+    this.badgeColorOf,
   });
 
   String value(Map<String, dynamic> row) {
@@ -683,22 +688,27 @@ class _PersonaCard extends StatelessWidget {
                 ),
               ),
               if (badgeText != null && badgeText != '—')
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: WannadiColors.steel.withValues(alpha: 0.16),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    badgeText,
-                    style: const TextStyle(
-                      color: WannadiColors.steel,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 0.6,
+                Builder(builder: (_) {
+                  final bc = badge?.badgeColorOf?.call(badgeText)
+                      ?? WannadiColors.steel;
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: bc.withValues(alpha: 0.16),
+                      borderRadius: BorderRadius.circular(6),
                     ),
-                  ),
-                ),
+                    child: Text(
+                      badgeText,
+                      style: TextStyle(
+                        color: bc,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 0.6,
+                      ),
+                    ),
+                  );
+                }),
             ],
           ),
         ),
@@ -890,23 +900,28 @@ class _RichTileState extends State<_RichTile> {
                       ),
                     ),
                     if (hasBadge)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: widget.accent.withValues(alpha: 0.14),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          badgeText,
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w900,
-                            color: widget.accent,
-                            letterSpacing: 0.5,
+                      Builder(builder: (_) {
+                        final bc = widget.badge
+                                ?.badgeColorOf?.call(badgeText)
+                            ?? widget.accent;
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: bc.withValues(alpha: 0.14),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ),
-                      ),
+                          child: Text(
+                            badgeText,
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w900,
+                              color: bc,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        );
+                      }),
                   ],
                 ),
                 if (visibleMeta.isNotEmpty) ...[
