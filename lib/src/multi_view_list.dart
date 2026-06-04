@@ -242,32 +242,53 @@ class _MultiViewListState extends State<MultiViewList> {
           ),
           const SizedBox(height: 16),
           PanelCard(
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.search_rounded),
-                      hintText: 'Buscar…',
-                      border: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      isCollapsed: true,
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 6, vertical: 14),
+            child: LayoutBuilder(builder: (ctx, c) {
+              final search = TextField(
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.search_rounded),
+                  hintText: 'Buscar…',
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  isCollapsed: true,
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 6, vertical: 14),
+                ),
+                onChanged: (v) => setState(() {
+                  _query = v;
+                  _page = 0;
+                }),
+              );
+              final toggle = _ViewToggle(
+                mode: _mode,
+                onChanged: (m) => setState(() => _mode = m),
+              );
+              // En paneles angostos (ej. el master de un two-pane) el
+              // buscador + el toggle de 4 vistas no caben en una fila →
+              // se apilan para no desbordar.
+              if (c.maxWidth < 420) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    search,
+                    const SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: toggle,
+                      ),
                     ),
-                    onChanged: (v) => setState(() {
-                      _query = v;
-                      _page = 0;
-                    }),
-                  ),
-                ),
-                _ViewToggle(
-                  mode: _mode,
-                  onChanged: (m) => setState(() => _mode = m),
-                ),
-              ],
-            ),
+                  ],
+                );
+              }
+              return Row(
+                children: [
+                  Expanded(child: search),
+                  toggle,
+                ],
+              );
+            }),
           ),
           const SizedBox(height: 16),
           if (filtered.isEmpty)
@@ -445,10 +466,10 @@ class _Header extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                     color: cs.sigmaTextPrimary,
-                    letterSpacing: -0.3,
+                    letterSpacing: -0.2,
                   ),
                 ),
                 Text(
