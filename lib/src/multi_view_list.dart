@@ -233,8 +233,6 @@ class _MultiViewListState extends State<MultiViewList> {
           _Header(
             title: widget.title,
             subtitle: widget.subtitle,
-            icon: widget.heroIcon,
-            color: widget.heroColor,
             count: filtered.length,
             actionLabel: widget.actionLabel,
             onAction: widget.onAction,
@@ -391,19 +389,21 @@ class _MultiViewListState extends State<MultiViewList> {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
+/// Cabecera canónica de las listas — alineada a `PageHeader` de la marca:
+/// fondo limpio, botón de atrás en chip, título Fraunces con la última
+/// palabra en *itálica dorada*, subtítulo de conteo y divisor inferior.
+/// (NO usa el viejo ícono-avatar con degradado/sombra de color, que se veía
+/// fuera de identidad.) wannadi no puede importar `SigmaDisplay`/`SigmaFonts`
+/// por ser submódulo, así que hereda Fraunces del `textTheme` del tema.
 class _Header extends StatelessWidget {
   final String title;
   final String? subtitle;
-  final IconData icon;
-  final Color color;
   final int count;
   final String? actionLabel;
   final VoidCallback? onAction;
   final VoidCallback? onBack;
   const _Header({
     required this.title,
-    required this.icon,
-    required this.color,
     required this.count,
     this.subtitle,
     this.actionLabel,
@@ -411,26 +411,50 @@ class _Header extends StatelessWidget {
     this.onBack,
   });
 
+  /// Realce dorado de la última palabra (igual que `SigmaDisplay`):
+  /// `amberDeep` en claro (contraste AA), `amber` en oscuro.
+  static const _amberDeep = Color(0xFF9E5E00);
+
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final dark = cs.brightness == Brightness.dark;
+    final emColor = dark ? WannadiColors.amber : _amberDeep;
     return LayoutBuilder(builder: (context, c) {
-      // En paneles angostos (p. ej. la lista dentro de un master-detail,
-      // ~320 px) el ícono hero y el botón de acción comían el ancho y el
-      // título quedaba con tan poco espacio que se partía palabra por
-      // palabra. En compacto se retira el ícono hero y la acción se
-      // reduce a su signo "+".
-      final compact = c.maxWidth < 460;
+      final wide = c.maxWidth >= 600;
       final iconOnlyAction = c.maxWidth < 380;
-      return Row(
+
+      // Base Fraunces heredada del tema (displaySmall ya trae la familia de
+      // marca + fallback); evita referenciar SigmaFonts desde el submódulo.
+      final base = (Theme.of(context).textTheme.displaySmall ??
+              const TextStyle())
+          .copyWith(
+        fontSize: wide ? 26 : 21,
+        fontWeight: FontWeight.w500,
+        height: 1.05,
+        letterSpacing: -0.4,
+        color: cs.sigmaTextPrimary,
+      );
+      // Última palabra → itálica dorada (resto normal).
+      final words = title.trimRight().split(RegExp(r'\s+'));
+      final String lead =
+          words.length > 1 ? '${words.sublist(0, words.length - 1).join(' ')} ' : '';
+      final String emph = words.isEmpty ? title : words.last;
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
             tooltip: 'Atrás',
             onPressed: onBack ?? () => safeBack(context),
             icon: const Icon(Icons.arrow_back_rounded),
             style: IconButton.styleFrom(
-              backgroundColor: cs.sigmaMuted,
+              backgroundColor: cs.sigmaCard,
               foregroundColor: cs.sigmaTextPrimary,
+              side: BorderSide(color: cs.sigmaBorder),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -438,54 +462,42 @@ class _Header extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          if (!compact) ...[
-            Container(
-              width: 52, height: 52,
-              decoration: BoxDecoration(
-                gradient: WannadiColors.gradientFor(color),
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [
-                  BoxShadow(
-                    color: color.withValues(alpha: 0.3),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Icon(icon, color: Colors.white, size: 24),
-            ),
-            const SizedBox(width: 14),
-          ],
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  title,
-                  maxLines: 1,
+                Text.rich(
+                  TextSpan(children: [
+                    if (lead.isNotEmpty) TextSpan(text: lead),
+                    TextSpan(
+                      text: emph,
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        color: emColor,
+                        fontWeight: base.fontWeight,
+                      ),
+                    ),
+                  ]),
+                  style: base,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: cs.sigmaTextPrimary,
-                    letterSpacing: -0.2,
-                  ),
                 ),
+                const SizedBox(height: 4),
                 Text(
                   '$count ${subtitle ?? "registros"}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: cs.sigmaTextSub,
-                    fontSize: 12,
+                    fontSize: 12.5,
                   ),
                 ),
               ],
             ),
           ),
           if (actionLabel != null && onAction != null) ...[
-            const SizedBox(width: 8),
+            const SizedBox(width: 12),
             if (iconOnlyAction)
               IconButton.filled(
                 tooltip: actionLabel,
@@ -499,6 +511,10 @@ class _Header extends StatelessWidget {
                 label: Text(actionLabel!),
               ),
           ],
+        ],
+          ),
+          const SizedBox(height: 16),
+          Divider(height: 1, color: cs.sigmaBorder),
         ],
       );
     });
@@ -1138,7 +1154,7 @@ class _TableView extends StatelessWidget {
           // Cabecera
           Container(
             decoration: BoxDecoration(
-              color: cs.sigmaMuted,
+              color: cs.sigmaCard,
               border: Border(bottom: BorderSide(color: cs.sigmaBorder)),
             ),
             child: SingleChildScrollView(
