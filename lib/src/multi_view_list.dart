@@ -1186,7 +1186,7 @@ class _TableView extends StatelessWidget {
                   color: (idKey != null && selectedId != null &&
                           pageRows[i][idKey] == selectedId)
                       ? WannadiColors.steel.withValues(alpha: 0.10)
-                      : (i.isEven ? cs.sigmaCard : cs.sigmaSurface),
+                      : cs.sigmaCard,
                   border: Border(bottom: BorderSide(color: cs.sigmaBorder)),
                 ),
                 child: SingleChildScrollView(
