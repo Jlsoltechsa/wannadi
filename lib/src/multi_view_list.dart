@@ -915,7 +915,7 @@ class _RichTileState extends State<_RichTile> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: widget.dense ? 13 : 15,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               color: cs.sigmaTextPrimary,
                             ),
                           ),
@@ -1008,8 +1008,9 @@ class _RichTileState extends State<_RichTile> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12, vertical: 10),
                     decoration: BoxDecoration(
-                      color: widget.accent.withValues(alpha: 0.10),
+                      color: cs.sigmaCard,
                       borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: cs.sigmaBorder),
                     ),
                     child: Row(
                       children: [
@@ -1026,7 +1027,7 @@ class _RichTileState extends State<_RichTile> {
                           statValue,
                           style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w700,
                             color: widget.accent,
                           ),
                         ),
