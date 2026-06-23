@@ -105,9 +105,9 @@ class ShimmerCardList extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.sigmaCard,
+              color: Theme.of(context).colorScheme.summaCard,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: Theme.of(context).colorScheme.sigmaBorder),
+              border: Border.all(color: Theme.of(context).colorScheme.summaBorder),
             ),
             child: Row(
               children: [

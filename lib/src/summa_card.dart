@@ -4,9 +4,9 @@ import 'colors.dart';
 import 'palettes.dart';
 import 'theme_tokens.dart';
 
-/// Variante semántica de [SigmaCard]. Define color de borde, tinte de
+/// Variante semántica de [SummaCard]. Define color de borde, tinte de
 /// fondo y color del chip de status (cuando aplica).
-enum SigmaCardVariant {
+enum SummaCardVariant {
   /// Sin tinte. Borde gris suave. Para listados y cards informativas.
   neutral,
 
@@ -41,13 +41,13 @@ enum SigmaCardVariant {
 /// - `collapsible` esconde el body detrás de un chevron en el header.
 ///
 /// Theming:
-/// - Fondo claro: blanco; oscuro: `cs.sigmaCard` (navy oscuro). Ambos
+/// - Fondo claro: blanco; oscuro: `cs.summaCard` (navy oscuro). Ambos
 ///   con el tinte de variant aplicado al 6% (claro) / 12% (oscuro).
 /// - Borde: color de la variant al 35% de opacidad por default; sube a
 ///   80% cuando está hovered.
-/// - Texto: `cs.sigmaTextPrimary` y `cs.sigmaTextSub`.
-class SigmaCard extends StatefulWidget {
-  const SigmaCard({
+/// - Texto: `cs.summaTextPrimary` y `cs.summaTextSub`.
+class SummaCard extends StatefulWidget {
+  const SummaCard({
     super.key,
     this.leading,
     required this.title,
@@ -55,7 +55,7 @@ class SigmaCard extends StatefulWidget {
     this.body,
     this.trailing,
     this.onTap,
-    this.variant = SigmaCardVariant.neutral,
+    this.variant = SummaCardVariant.neutral,
     this.accentColor,
     this.collapsible = false,
     this.initiallyExpanded = true,
@@ -69,7 +69,7 @@ class SigmaCard extends StatefulWidget {
   final Widget? body;
   final Widget? trailing;
   final VoidCallback? onTap;
-  final SigmaCardVariant variant;
+  final SummaCardVariant variant;
 
   /// Si está presente, sobrescribe el color que tomaría la variante.
   /// Útil para tiles donde cada uno tiene su propio color de marca.
@@ -84,27 +84,27 @@ class SigmaCard extends StatefulWidget {
   final bool dense;
 
   @override
-  State<SigmaCard> createState() => _SigmaCardState();
+  State<SummaCard> createState() => _SummaCardState();
 }
 
-class _SigmaCardState extends State<SigmaCard> {
+class _SummaCardState extends State<SummaCard> {
   bool _hover = false;
   late bool _expanded = widget.initiallyExpanded;
 
   Color _variantColor(BuildContext context) {
     if (widget.accentColor != null) return widget.accentColor!;
     switch (widget.variant) {
-      case SigmaCardVariant.neutral:
+      case SummaCardVariant.neutral:
         return Theme.of(context).colorScheme.outline;
-      case SigmaCardVariant.info:
+      case SummaCardVariant.info:
         return WannadiColors.info;
-      case SigmaCardVariant.success:
+      case SummaCardVariant.success:
         return WannadiColors.success;
-      case SigmaCardVariant.warning:
+      case SummaCardVariant.warning:
         return WannadiColors.warning;
-      case SigmaCardVariant.danger:
+      case SummaCardVariant.danger:
         return WannadiColors.danger;
-      case SigmaCardVariant.accent:
+      case SummaCardVariant.accent:
         return context.brandAccent;
     }
   }
@@ -120,23 +120,23 @@ class _SigmaCardState extends State<SigmaCard> {
     final color = _variantColor(context);
     final tappable = widget.onTap != null || widget.collapsible;
 
-    // Tinte de fondo. Neutral en dark se queda con sigmaCard pelado.
-    final Color tint = widget.variant == SigmaCardVariant.neutral
+    // Tinte de fondo. Neutral en dark se queda con summaCard pelado.
+    final Color tint = widget.variant == SummaCardVariant.neutral
         ? Colors.transparent
         : color.withValues(alpha: isDark ? 0.12 : 0.06);
-    final Color base = cs.sigmaCard;
+    final Color base = cs.summaCard;
     final Color background = tint == Colors.transparent
         ? base
         : Color.alphaBlend(tint, base);
 
     // Borde: más fuerte en hover.
-    final double borderAlpha = widget.variant == SigmaCardVariant.neutral
+    final double borderAlpha = widget.variant == SummaCardVariant.neutral
         ? (_hover ? 0.45 : 0.0)
         : (_hover ? 0.8 : 0.35);
-    final Color borderColor = widget.variant == SigmaCardVariant.neutral
+    final Color borderColor = widget.variant == SummaCardVariant.neutral
         ? (_hover
             ? color.withValues(alpha: borderAlpha)
-            : cs.sigmaBorder)
+            : cs.summaBorder)
         : color.withValues(alpha: borderAlpha);
 
     final EdgeInsets pad = (widget.padding ??
@@ -174,7 +174,7 @@ class _SigmaCardState extends State<SigmaCard> {
                       children: [
                         Divider(
                           height: 1,
-                          color: cs.sigmaBorder,
+                          color: cs.summaBorder,
                         ),
                         const SizedBox(height: 12),
                         widget.body!,
@@ -205,7 +205,7 @@ class _SigmaCardState extends State<SigmaCard> {
         ),
         boxShadow: [
           BoxShadow(
-            color: (widget.variant == SigmaCardVariant.neutral
+            color: (widget.variant == SummaCardVariant.neutral
                     ? Colors.black
                     : color)
                 .withValues(alpha: _hover ? 0.12 : 0.04),
@@ -278,7 +278,7 @@ class _Header extends StatelessWidget {
                 style: TextStyle(
                   fontSize: dense ? 13.5 : 15,
                   fontWeight: FontWeight.w800,
-                  color: cs.sigmaTextPrimary,
+                  color: cs.summaTextPrimary,
                   height: 1.25,
                 ),
               ),
@@ -288,7 +288,7 @@ class _Header extends StatelessWidget {
                   subtitle!,
                   style: TextStyle(
                     fontSize: dense ? 11.5 : 12.5,
-                    color: cs.sigmaTextSub,
+                    color: cs.summaTextSub,
                     height: 1.35,
                   ),
                 ),
@@ -307,7 +307,7 @@ class _Header extends StatelessWidget {
             duration: const Duration(milliseconds: 180),
             child: Icon(
               Icons.keyboard_arrow_down_rounded,
-              color: cs.sigmaTextSub,
+              color: cs.summaTextSub,
               size: 20,
             ),
           ),
@@ -318,9 +318,9 @@ class _Header extends StatelessWidget {
 }
 
 /// Helper de uso frecuente: cuadrado redondeado con un icono tintado
-/// del color de la card. Pensado para pasarlo a [SigmaCard.leading].
-class SigmaCardIcon extends StatelessWidget {
-  const SigmaCardIcon({
+/// del color de la card. Pensado para pasarlo a [SummaCard.leading].
+class SummaCardIcon extends StatelessWidget {
+  const SummaCardIcon({
     super.key,
     required this.icon,
     required this.color,

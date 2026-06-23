@@ -21,7 +21,7 @@ versionado siguiendo [Semantic Versioning](https://semver.org/lang/es/).
 ### Added — runtime brand colors
 
 - **`PaletteColors.fromBrand(primary, accent)`** — factory que construye una `PaletteColors` a partir de dos colores. El `primary` actúa como seed del `ColorScheme.fromSeed` (light / dark) y como `brandDeep`; el `accent` se inyecta como `secondary` del scheme y como `brandAccent`. Apps que persisten su esquema visual en base de datos pueden construir la paleta en runtime sin un enum de variantes.
-- **`setPaletteColorsResolver(fn)`** — setter paralelo a `setPaletteResolver`. Si está registrado, tiene prioridad. Permite que la paleta se resuelva como `PaletteColors` directo en vez de pasar por el enum `SigmaPalette`.
+- **`setPaletteColorsResolver(fn)`** — setter paralelo a `setPaletteResolver`. Si está registrado, tiene prioridad. Permite que la paleta se resuelva como `PaletteColors` directo en vez de pasar por el enum `SummaPalette`.
 
 ### Changed
 
@@ -29,18 +29,18 @@ versionado siguiendo [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [0.2.0] — 2026-05-14
 
-### Added — SigmaCard
+### Added — SummaCard
 
 Card unificada que reemplaza la familia de cards ad-hoc dispersas por una app: action tiles, info cards, accent cards (warning/danger), cards colapsables.
 
-- **`SigmaCard`** — header con `leading` + `title` + `subtitle` + `trailing`, body opcional debajo, `onTap` opcional, soporte de hover con elevación animada.
-- **`SigmaCardVariant`** — `neutral / info / success / warning / danger / accent` — tinta borde + fondo. `accent` toma `context.brandAccent`.
+- **`SummaCard`** — header con `leading` + `title` + `subtitle` + `trailing`, body opcional debajo, `onTap` opcional, soporte de hover con elevación animada.
+- **`SummaCardVariant`** — `neutral / info / success / warning / danger / accent` — tinta borde + fondo. `accent` toma `context.brandAccent`.
 - **`accentColor`** opcional sobrescribe el color de la variante (útil cuando cada tile tiene su propio color de marca, p.ej. mosaicos admin).
 - **`collapsible: true`** esconde el body detrás de un chevron en el header con `AnimatedSize`.
 - **`dense: true`** baja padding y typography para listas densas.
-- **`SigmaCardIcon`** — helper para construir el cuadrado redondeado con icono tintado que va en `leading`.
+- **`SummaCardIcon`** — helper para construir el cuadrado redondeado con icono tintado que va en `leading`.
 
-Diseñada para uniformidad: usa `cs.sigmaCard` / `cs.sigmaBorder` / `cs.sigmaTextPrimary` / `cs.sigmaTextSub` de `WannadiSemanticColors`, así el dark mode funciona sin trabajo extra del caller.
+Diseñada para uniformidad: usa `cs.summaCard` / `cs.summaBorder` / `cs.summaTextPrimary` / `cs.summaTextSub` de `WannadiSemanticColors`, así el dark mode funciona sin trabajo extra del caller.
 
 ## [0.1.3] — 2026-05-13
 
@@ -76,7 +76,7 @@ Diseñada para uniformidad: usa `cs.sigmaCard` / `cs.sigmaBorder` / `cs.sigmaTex
 
 ### Added — primer release de wannadi
 
-Extracción del UI kit del proyecto SIGMA a una librería independiente:
+Extracción del UI kit del proyecto SUMMA a una librería independiente:
 
 - **`MultiViewList`** con cuatro vistas alternables (cards, tiles, tabla,
   kanban), búsqueda integrada, ordenamiento por columna, group-by y

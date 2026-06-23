@@ -393,7 +393,7 @@ class _MultiViewListState extends State<MultiViewList> {
 /// fondo limpio, botón de atrás en chip, título Fraunces con la última
 /// palabra en *itálica dorada*, subtítulo de conteo y divisor inferior.
 /// (NO usa el viejo ícono-avatar con degradado/sombra de color, que se veía
-/// fuera de identidad.) wannadi no puede importar `SigmaDisplay`/`SigmaFonts`
+/// fuera de identidad.) wannadi no puede importar `SummaDisplay`/`SummaFonts`
 /// por ser submódulo, así que hereda Fraunces del `textTheme` del tema.
 class _Header extends StatelessWidget {
   final String title;
@@ -411,7 +411,7 @@ class _Header extends StatelessWidget {
     this.onBack,
   });
 
-  /// Realce dorado de la última palabra (igual que `SigmaDisplay`):
+  /// Realce dorado de la última palabra (igual que `SummaDisplay`):
   /// `amberDeep` en claro (contraste AA), `amber` en oscuro.
   static const _amberDeep = Color(0xFF9E5E00);
 
@@ -425,7 +425,7 @@ class _Header extends StatelessWidget {
       final iconOnlyAction = c.maxWidth < 380;
 
       // Base Fraunces heredada del tema (displaySmall ya trae la familia de
-      // marca + fallback); evita referenciar SigmaFonts desde el submódulo.
+      // marca + fallback); evita referenciar SummaFonts desde el submódulo.
       final base = (Theme.of(context).textTheme.displaySmall ??
               const TextStyle())
           .copyWith(
@@ -433,7 +433,7 @@ class _Header extends StatelessWidget {
         fontWeight: FontWeight.w500,
         height: 1.05,
         letterSpacing: -0.4,
-        color: cs.sigmaTextPrimary,
+        color: cs.summaTextPrimary,
       );
       // Última palabra → itálica dorada (resto normal).
       final words = title.trimRight().split(RegExp(r'\s+'));
@@ -452,9 +452,9 @@ class _Header extends StatelessWidget {
             onPressed: onBack ?? () => safeBack(context),
             icon: const Icon(Icons.arrow_back_rounded),
             style: IconButton.styleFrom(
-              backgroundColor: cs.sigmaCard,
-              foregroundColor: cs.sigmaTextPrimary,
-              side: BorderSide(color: cs.sigmaBorder),
+              backgroundColor: cs.summaCard,
+              foregroundColor: cs.summaTextPrimary,
+              side: BorderSide(color: cs.summaBorder),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -489,7 +489,7 @@ class _Header extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: cs.sigmaTextSub,
+                    color: cs.summaTextSub,
                     fontSize: 12.5,
                   ),
                 ),
@@ -514,7 +514,7 @@ class _Header extends StatelessWidget {
         ],
           ),
           const SizedBox(height: 16),
-          Divider(height: 1, color: cs.sigmaBorder),
+          Divider(height: 1, color: cs.summaBorder),
         ],
       );
     });
@@ -534,7 +534,7 @@ class _ViewToggle extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     return SegmentedButton<MvViewMode>(
       style: SegmentedButton.styleFrom(
-        side: BorderSide(color: cs.sigmaBorder),
+        side: BorderSide(color: cs.summaBorder),
         visualDensity: VisualDensity.compact,
       ),
       segments: const [
@@ -659,10 +659,10 @@ class _PersonaCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: selected
                 ? WannadiColors.steel.withValues(alpha: 0.10)
-                : cs.sigmaCard,
+                : cs.summaCard,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
-              color: selected ? WannadiColors.steel : cs.sigmaBorder,
+              color: selected ? WannadiColors.steel : cs.summaBorder,
               width: selected ? 1.5 : 1,
             ),
             boxShadow: [
@@ -705,7 +705,7 @@ class _PersonaCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w800,
-                        color: cs.sigmaTextPrimary,
+                        color: cs.summaTextPrimary,
                       ),
                     ),
                     if (sub != null)
@@ -717,7 +717,7 @@ class _PersonaCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 12,
-                            color: cs.sigmaTextSub,
+                            color: cs.summaTextSub,
                           ),
                         ),
                       ),
@@ -848,10 +848,10 @@ class _RichTileState extends State<_RichTile> {
             decoration: BoxDecoration(
               color: widget.selected
                   ? widget.accent.withValues(alpha: 0.08)
-                  : cs.sigmaCard,
+                  : cs.summaCard,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: widget.selected ? widget.accent : cs.sigmaBorder,
+                color: widget.selected ? widget.accent : cs.summaBorder,
                 width: widget.selected ? 1.5 : 1,
               ),
               boxShadow: [
@@ -916,7 +916,7 @@ class _RichTileState extends State<_RichTile> {
                             style: TextStyle(
                               fontSize: widget.dense ? 13 : 15,
                               fontWeight: FontWeight.w700,
-                              color: cs.sigmaTextPrimary,
+                              color: cs.summaTextPrimary,
                             ),
                           ),
                           if (sub != null && sub != '—')
@@ -963,13 +963,13 @@ class _RichTileState extends State<_RichTile> {
                 ),
                 if (visibleMeta.isNotEmpty) ...[
                   const SizedBox(height: 12),
-                  Container(height: 1, color: cs.sigmaBorder),
+                  Container(height: 1, color: cs.summaBorder),
                   const SizedBox(height: 10),
                   for (int i = 0; i < visibleMeta.length; i++) ...[
                     Row(
                       children: [
                         Icon(_iconForKey(visibleMeta[i].key),
-                            size: 14, color: cs.sigmaTextSub),
+                            size: 14, color: cs.summaTextSub),
                         const SizedBox(width: 8),
                         SizedBox(
                           width: 70,
@@ -977,7 +977,7 @@ class _RichTileState extends State<_RichTile> {
                             visibleMeta[i].label,
                             style: TextStyle(
                               fontSize: 11,
-                              color: cs.sigmaTextSub,
+                              color: cs.summaTextSub,
                               fontWeight: FontWeight.w600,
                             ),
                             maxLines: 1,
@@ -990,7 +990,7 @@ class _RichTileState extends State<_RichTile> {
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               fontSize: 12,
-                              color: cs.sigmaTextPrimary,
+                              color: cs.summaTextPrimary,
                               fontWeight: FontWeight.w600,
                             ),
                             maxLines: 1,
@@ -1008,9 +1008,9 @@ class _RichTileState extends State<_RichTile> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12, vertical: 10),
                     decoration: BoxDecoration(
-                      color: cs.sigmaCard,
+                      color: cs.summaCard,
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: cs.sigmaBorder),
+                      border: Border.all(color: cs.summaBorder),
                     ),
                     child: Row(
                       children: [
@@ -1018,7 +1018,7 @@ class _RichTileState extends State<_RichTile> {
                           widget.statColumn!.label,
                           style: TextStyle(
                             fontSize: 11,
-                            color: cs.sigmaTextSub,
+                            color: cs.summaTextSub,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -1155,8 +1155,8 @@ class _TableView extends StatelessWidget {
           // Cabecera
           Container(
             decoration: BoxDecoration(
-              color: cs.sigmaCard,
-              border: Border(bottom: BorderSide(color: cs.sigmaBorder)),
+              color: cs.summaCard,
+              border: Border(bottom: BorderSide(color: cs.summaBorder)),
             ),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -1187,8 +1187,8 @@ class _TableView extends StatelessWidget {
                   color: (idKey != null && selectedId != null &&
                           pageRows[i][idKey] == selectedId)
                       ? WannadiColors.steel.withValues(alpha: 0.10)
-                      : cs.sigmaCard,
-                  border: Border(bottom: BorderSide(color: cs.sigmaBorder)),
+                      : cs.summaCard,
+                  border: Border(bottom: BorderSide(color: cs.summaBorder)),
                 ),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -1213,7 +1213,7 @@ class _TableView extends StatelessWidget {
                   '${start + 1}-$end de ${rows.length}',
                   style: TextStyle(
                     fontSize: 11,
-                    color: cs.sigmaTextSub,
+                    color: cs.summaTextSub,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -1280,7 +1280,7 @@ class _HeaderCell extends StatelessWidget {
                   letterSpacing: 1.2,
                   color: sorted
                       ? WannadiColors.steel
-                      : Theme.of(context).colorScheme.sigmaTextSub,
+                      : Theme.of(context).colorScheme.summaTextSub,
                 ),
               ),
             ),
@@ -1315,7 +1315,7 @@ class _BodyCell extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           fontSize: 12.5,
-          color: Theme.of(context).colorScheme.sigmaTextPrimary,
+          color: Theme.of(context).colorScheme.summaTextPrimary,
           fontWeight: FontWeight.w600,
         ),
       ),
@@ -1438,10 +1438,10 @@ class _KanbanColumnState extends State<_KanbanColumn> {
       decoration: BoxDecoration(
         color: _highlight
             ? color.withValues(alpha: 0.10)
-            : cs.sigmaMuted,
+            : cs.summaMuted,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: _highlight ? color : cs.sigmaBorder,
+          color: _highlight ? color : cs.summaBorder,
           width: _highlight ? 2 : 1,
         ),
       ),
@@ -1475,7 +1475,7 @@ class _KanbanColumnState extends State<_KanbanColumn> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
-                    color: cs.sigmaCard,
+                    color: cs.summaCard,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(

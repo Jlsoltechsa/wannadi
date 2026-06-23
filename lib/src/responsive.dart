@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Breakpoint canónico SIGMA: bajo 640 lógico-px ⇒ móvil/compact.
+/// Breakpoint canónico SUMMA: bajo 640 lógico-px ⇒ móvil/compact.
 const double kCompactBreakpoint = 640;
 const double kTabletBreakpoint = 960;
 

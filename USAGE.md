@@ -62,7 +62,7 @@ private and may be reorganized without notice.
 
 ## Palettes and runtime theming
 
-wannadi ships five interchangeable palettes via the `SigmaPalette` enum:
+wannadi ships five interchangeable palettes via the `SummaPalette` enum:
 
 | Palette | Identifier | `brandDeep` | `brandAccent` |
 |---|---|---|---|
@@ -79,7 +79,7 @@ widgets.
 ### Accessing the active palette from a widget
 
 ```dart
-final palette = SigmaPalette.ocean;
+final palette = SummaPalette.ocean;
 final scheme  = palette.light;  // or .dark
 final deep    = palette.colors.brandDeep;
 final accent  = palette.colors.brandAccent;
@@ -97,7 +97,7 @@ Container(
 `context.brandDeep`, `context.brandAccent`, `context.onBrand`, and
 `context.brandGradient` resolve against the palette returned by the
 *palette resolver*. If no resolver is registered, the extension falls
-back to `SigmaPalette.classic`.
+back to `SummaPalette.classic`.
 
 ### Registering a palette resolver
 
@@ -118,18 +118,18 @@ void main() {
 }
 ```
 
-The resolver is `SigmaPalette? Function(BuildContext)`. Return `null`
-to fall back to `SigmaPalette.classic`.
+The resolver is `SummaPalette? Function(BuildContext)`. Return `null`
+to fall back to `SummaPalette.classic`.
 
 ### Persisting the choice
 
-`SigmaPaletteX` exposes `.id` and `.fromId(String?)` for round-tripping
+`SummaPaletteX` exposes `.id` and `.fromId(String?)` for round-tripping
 the enum through `SharedPreferences`, query strings, or any other
 string store:
 
 ```dart
-final id = SigmaPalette.forest.id;       // "forest"
-final p  = SigmaPaletteX.fromId('forest'); // SigmaPalette.forest
+final id = SummaPalette.forest.id;       // "forest"
+final p  = SummaPaletteX.fromId('forest'); // SummaPalette.forest
 ```
 
 ### `.label` and `.swatch`
@@ -148,24 +148,24 @@ of tokens that adapt automatically to the brightness of the active
 
 | Getter | Light value | Dark value |
 |---|---|---|
-| `sigmaSurface` | `surface` | `surface` |
-| `sigmaCard` | `#FFFFFF` | `#1C2540` |
-| `sigmaMuted` | `#E7ECF4` | `#2A3550` |
-| `sigmaBorder` | `#D9DEE9` | `#2D3756` |
-| `sigmaTextPrimary` | `#12182A` | `#E7ECF4` |
-| `sigmaTextSub` | `#5A6A8A` | `#9AAAC4` |
+| `summaSurface` | `surface` | `surface` |
+| `summaCard` | `#FFFFFF` | `#1C2540` |
+| `summaMuted` | `#E7ECF4` | `#2A3550` |
+| `summaBorder` | `#D9DEE9` | `#2D3756` |
+| `summaTextPrimary` | `#12182A` | `#E7ECF4` |
+| `summaTextSub` | `#5A6A8A` | `#9AAAC4` |
 
 ```dart
 final cs = Theme.of(context).colorScheme;
 Container(
-  color: cs.sigmaCard,
-  child: Text('Hello', style: TextStyle(color: cs.sigmaTextPrimary)),
+  color: cs.summaCard,
+  child: Text('Hello', style: TextStyle(color: cs.summaTextPrimary)),
 );
 ```
 
 For new code the package also ships the alias forms `wannadiCard`,
 `wannadiMuted`, etc. (same values, friendlier name for projects with no
-SIGMA heritage).
+SUMMA heritage).
 
 ---
 

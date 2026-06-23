@@ -29,9 +29,9 @@ class ModernStatCard extends StatelessWidget {
     final card = Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: cs.sigmaCard,
+        color: cs.summaCard,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: cs.sigmaBorder),
+        border: Border.all(color: cs.summaBorder),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.18 : 0.03),
@@ -62,7 +62,7 @@ class ModernStatCard extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: 11,
-                    color: cs.sigmaTextSub,
+                    color: cs.summaTextSub,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.4,
                   ),
@@ -73,7 +73,7 @@ class ModernStatCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
-                    color: cs.sigmaTextPrimary,
+                    color: cs.summaTextPrimary,
                     height: 1.1,
                   ),
                 ),
@@ -86,7 +86,7 @@ class ModernStatCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 11,
-                        color: cs.sigmaTextSub,
+                        color: cs.summaTextSub,
                       ),
                     ),
                   ),
@@ -137,9 +137,9 @@ class ActionCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: cs.sigmaCard,
+            color: cs.summaCard,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: cs.sigmaBorder),
+            border: Border.all(color: cs.summaBorder),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +160,7 @@ class ActionCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color: cs.sigmaTextPrimary,
+                  color: cs.summaTextPrimary,
                 ),
               ),
               if (subtitle != null) ...[
@@ -169,7 +169,7 @@ class ActionCard extends StatelessWidget {
                   subtitle!,
                   style: TextStyle(
                     fontSize: 12,
-                    color: cs.sigmaTextSub,
+                    color: cs.summaTextSub,
                   ),
                 ),
               ],
@@ -406,7 +406,7 @@ class SectionHeader extends StatelessWidget {
       child: Row(
         children: [
           if (icon != null) ...[
-            Icon(icon, size: 16, color: cs.sigmaTextSub),
+            Icon(icon, size: 16, color: cs.summaTextSub),
             const SizedBox(width: 8),
           ],
           Expanded(
@@ -415,7 +415,7 @@ class SectionHeader extends StatelessWidget {
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w800,
-                color: cs.sigmaTextPrimary,
+                color: cs.summaTextPrimary,
                 letterSpacing: -0.1,
               ),
             ),
@@ -506,10 +506,10 @@ class EmptyState extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: cs.sigmaMuted,
+              color: cs.summaMuted,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 28, color: cs.sigmaTextSub),
+            child: Icon(icon, size: 28, color: cs.summaTextSub),
           ),
           const SizedBox(height: 12),
           Text(
@@ -517,7 +517,7 @@ class EmptyState extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.w700,
-              color: cs.sigmaTextPrimary,
+              color: cs.summaTextPrimary,
               fontSize: 14,
             ),
           ),
@@ -527,7 +527,7 @@ class EmptyState extends StatelessWidget {
               message!,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: cs.sigmaTextSub,
+                color: cs.summaTextSub,
                 fontSize: 12,
               ),
             ),
@@ -590,7 +590,7 @@ class ActivityRow extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
-                        color: cs.sigmaTextPrimary,
+                        color: cs.summaTextPrimary,
                         fontSize: 13,
                       ),
                     ),
@@ -600,7 +600,7 @@ class ActivityRow extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: cs.sigmaTextSub,
+                          color: cs.summaTextSub,
                           fontSize: 11,
                         ),
                       ),
@@ -613,7 +613,7 @@ class ActivityRow extends StatelessWidget {
                   child: Text(
                     trailing!,
                     style: TextStyle(
-                      color: cs.sigmaTextSub,
+                      color: cs.summaTextSub,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                     ),
@@ -657,7 +657,7 @@ class DemoBanner extends StatelessWidget {
               message,
               style: TextStyle(
                 fontSize: 12,
-                color: cs.sigmaTextPrimary,
+                color: cs.summaTextPrimary,
                 fontWeight: FontWeight.w600,
                 height: 1.4,
               ),

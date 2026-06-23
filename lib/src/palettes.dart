@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-/// Identificador de paleta SIGMA. Determina la "skin" visual del tema.
+/// Identificador de paleta SUMMA. Determina la "skin" visual del tema.
 ///
 /// La paleta gobierna el `ColorScheme` y elementos cromáticos que cambian
 /// entre skins (AppBar, scaffold background, acentos). Los activos de
 /// marca (logo, símbolos) se mantienen constantes.
-enum SigmaPalette {
+enum SummaPalette {
   classic,    // navy + ámbar — la skin oficial original
   ocean,      // azul océano + turquesa
   forest,     // verde bosque + amarillo trigo
@@ -13,35 +13,35 @@ enum SigmaPalette {
   graphite,   // gris carbón + azul cobalto
 }
 
-extension SigmaPaletteX on SigmaPalette {
+extension SummaPaletteX on SummaPalette {
   String get id {
     switch (this) {
-      case SigmaPalette.classic:  return 'classic';
-      case SigmaPalette.ocean:    return 'ocean';
-      case SigmaPalette.forest:   return 'forest';
-      case SigmaPalette.sunset:   return 'sunset';
-      case SigmaPalette.graphite: return 'graphite';
+      case SummaPalette.classic:  return 'classic';
+      case SummaPalette.ocean:    return 'ocean';
+      case SummaPalette.forest:   return 'forest';
+      case SummaPalette.sunset:   return 'sunset';
+      case SummaPalette.graphite: return 'graphite';
     }
   }
 
   String get label {
     switch (this) {
-      case SigmaPalette.classic:  return 'Clásico';
-      case SigmaPalette.ocean:    return 'Océano';
-      case SigmaPalette.forest:   return 'Bosque';
-      case SigmaPalette.sunset:   return 'Atardecer';
-      case SigmaPalette.graphite: return 'Grafito';
+      case SummaPalette.classic:  return 'Clásico';
+      case SummaPalette.ocean:    return 'Océano';
+      case SummaPalette.forest:   return 'Bosque';
+      case SummaPalette.sunset:   return 'Atardecer';
+      case SummaPalette.graphite: return 'Grafito';
     }
   }
 
   /// Color representativo para el chip del selector.
   Color get swatch => light.primary;
 
-  static SigmaPalette fromId(String? id) {
-    for (final p in SigmaPalette.values) {
+  static SummaPalette fromId(String? id) {
+    for (final p in SummaPalette.values) {
       if (p.id == id) return p;
     }
-    return SigmaPalette.classic;
+    return SummaPalette.classic;
   }
 }
 
@@ -96,14 +96,14 @@ class PaletteColors {
 }
 
 
-extension PaletteColorsOf on SigmaPalette {
+extension PaletteColorsOf on SummaPalette {
   PaletteColors get colors {
     switch (this) {
-      case SigmaPalette.classic:  return _classic;
-      case SigmaPalette.ocean:    return _ocean;
-      case SigmaPalette.forest:   return _forest;
-      case SigmaPalette.sunset:   return _sunset;
-      case SigmaPalette.graphite: return _graphite;
+      case SummaPalette.classic:  return _classic;
+      case SummaPalette.ocean:    return _ocean;
+      case SummaPalette.forest:   return _forest;
+      case SummaPalette.sunset:   return _sunset;
+      case SummaPalette.graphite: return _graphite;
     }
   }
   ColorScheme get light => colors.light;
@@ -153,8 +153,8 @@ extension BrandColorsOf on BuildContext {
 /// 1. `_paletteColorsResolver` si está registrado — permite que la app
 ///    construya un `PaletteColors` arbitrario en runtime (por ejemplo,
 ///    a partir de un par de colores configurados en backend).
-/// 2. `_paletteResolver` (legacy) que devuelve un `SigmaPalette` enum.
-/// 3. `SigmaPalette.classic` como fallback.
+/// 2. `_paletteResolver` (legacy) que devuelve un `SummaPalette` enum.
+/// 3. `SummaPalette.classic` como fallback.
 PaletteColors _resolvePaletteColors(BuildContext context) {
   try {
     final pc = _paletteColorsResolver?.call(context);
@@ -164,15 +164,15 @@ PaletteColors _resolvePaletteColors(BuildContext context) {
     final p = _paletteResolver?.call(context);
     if (p != null) return p.colors;
   } catch (_) {/* ignore */}
-  return SigmaPalette.classic.colors;
+  return SummaPalette.classic.colors;
 }
 
 /// Setter externo para que el caller registre cómo obtener la paleta
 /// activa desde el contexto. Se setea una vez al iniciar la app desde
 /// `main.dart` o desde `HomeShell`. Esto desacopla `palettes.dart` de
 /// `theme_provider.dart`.
-SigmaPalette? Function(BuildContext)? _paletteResolver;
-void setPaletteResolver(SigmaPalette? Function(BuildContext) fn) {
+SummaPalette? Function(BuildContext)? _paletteResolver;
+void setPaletteResolver(SummaPalette? Function(BuildContext) fn) {
   _paletteResolver = fn;
 }
 
@@ -188,7 +188,7 @@ void setPaletteColorsResolver(PaletteColors? Function(BuildContext) fn) {
 
 // ── Definiciones de paletas ─────────────────────────────────────────────────
 
-// Paleta oficial SIGMA — fiel al Manual de Marca v1.0 (capas 1 y 2 +
+// Paleta oficial SUMMA — fiel al Manual de Marca v1.0 (capas 1 y 2 +
 // neutros cálidos crema de 10.01). Las demás paletas (ocean/forest/…) son
 // skins alternativas y NO siguen el manual a propósito.
 const _classic = PaletteColors(

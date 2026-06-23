@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 /// Esta clase NO representa marca: son los semánticos (success / danger /
 /// warning / info), las superficies (Material 3) y un conjunto de colores
 /// accent neutrales que los widgets usan como defaults. Si tu app necesita
-/// marca, configúrala vía paleta (`SigmaPalette`) en lugar de hardcodear.
+/// marca, configúrala vía paleta (`SummaPalette`) en lugar de hardcodear.
 class WannadiColors {
-  // ── Marca por defecto — alineada al Manual de Marca SIGMA v1.0 (el host
+  // ── Marca por defecto — alineada al Manual de Marca SUMMA v1.0 (el host
   // puede cambiarla vía paletas o pasando colores explícitos) ──────────────
   static const navy        = Color(0xFF1F2A4E);  // navy.deep
   static const navyDeep    = Color(0xFF15203C);  // derivado (gradientes)

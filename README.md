@@ -5,7 +5,7 @@ applications. Provides switchable list views (cards / tiles / table /
 kanban), responsive layout helpers, and a set of pluggable color
 palettes that any consumer app can switch at runtime.
 
-Originally extracted from the SIGMA project and published as a standalone
+Originally extracted from the SUMMA project and published as a standalone
 library so other Flutter apps can adopt the same primitives.
 
 ## Features
@@ -79,9 +79,9 @@ in [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Maintenance
 
-wannadi is developed alongside SIGMA, its primary consumer. It lives as
-a Git submodule inside `sigma_frontend/packages/wannadi`, but the
-repository is independent: changes are committed here first and SIGMA
+wannadi is developed alongside SUMMA, its primary consumer. It lives as
+a Git submodule inside `summa_frontend/packages/wannadi`, but the
+repository is independent: changes are committed here first and SUMMA
 bumps the submodule reference afterwards.
 
 ## Authors

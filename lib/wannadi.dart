@@ -20,7 +20,7 @@ export 'src/palettes.dart';
 
 // Bloques de presentación.
 export 'src/modern_kit.dart';
-export 'src/sigma_card.dart';
+export 'src/summa_card.dart';
 export 'src/letteravatar.dart';
 export 'src/shimmer.dart';
 

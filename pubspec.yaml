@@ -1,6 +1,6 @@
 name: wannadi
 description: >-
-  Paquete compartido de SIGMA — un kit de UI Material 3 (listas con vistas
+  Paquete compartido de SUMMA — un kit de UI Material 3 (listas con vistas
   alternables cards / tiles / tabla / kanban, helpers responsivos, paletas
   conmutables, cards, shimmer) y una cola offline local-first (outbox en
   SQLite con flush HTTP reintentable). `package:wannadi/wannadi.dart` para
