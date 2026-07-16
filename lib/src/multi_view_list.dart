@@ -225,6 +225,10 @@ class _MultiViewListState extends State<MultiViewList> {
     final pad = isWide ? 28.0 : 16.0;
     final filtered = _filtered;
 
+    final renderMode = (!isWide && (_mode == MvViewMode.table || _mode == MvViewMode.kanban))
+        ? MvViewMode.cards
+        : _mode;
+
     return SingleChildScrollView(
       padding: EdgeInsets.all(pad),
       child: Column(
@@ -258,7 +262,8 @@ class _MultiViewListState extends State<MultiViewList> {
                 }),
               );
               final toggle = _ViewToggle(
-                mode: _mode,
+                mode: renderMode,
+                showAll: isWide,
                 onChanged: (m) => setState(() => _mode = m),
               );
               // En paneles angostos (ej. el master de un two-pane) el
@@ -297,7 +302,7 @@ class _MultiViewListState extends State<MultiViewList> {
               ),
             )
           else
-            switch (_mode) {
+            switch (renderMode) {
               MvViewMode.cards  => _CardsView(
                   rows: filtered,
                   primary: widget.primary,
@@ -524,9 +529,11 @@ class _Header extends StatelessWidget {
 class _ViewToggle extends StatelessWidget {
   final MvViewMode mode;
   final ValueChanged<MvViewMode> onChanged;
+  final bool showAll;
   const _ViewToggle({
     required this.mode,
     required this.onChanged,
+    this.showAll = true,
   });
 
   @override
@@ -537,27 +544,29 @@ class _ViewToggle extends StatelessWidget {
         side: BorderSide(color: cs.summaBorder),
         visualDensity: VisualDensity.compact,
       ),
-      segments: const [
-        ButtonSegment(
+      segments: [
+        const ButtonSegment(
           value: MvViewMode.cards,
           icon: Icon(Icons.view_agenda_rounded, size: 16),
           tooltip: 'Tarjetas',
         ),
-        ButtonSegment(
+        const ButtonSegment(
           value: MvViewMode.tiles,
           icon: Icon(Icons.dashboard_rounded, size: 16),
           tooltip: 'Mosaico',
         ),
-        ButtonSegment(
-          value: MvViewMode.table,
-          icon: Icon(Icons.table_rows_rounded, size: 16),
-          tooltip: 'Tabla',
-        ),
-        ButtonSegment(
-          value: MvViewMode.kanban,
-          icon: Icon(Icons.view_kanban_rounded, size: 16),
-          tooltip: 'Kanban',
-        ),
+        if (showAll) ...[
+          const ButtonSegment(
+            value: MvViewMode.table,
+            icon: Icon(Icons.table_rows_rounded, size: 16),
+            tooltip: 'Tabla',
+          ),
+          const ButtonSegment(
+            value: MvViewMode.kanban,
+            icon: Icon(Icons.view_kanban_rounded, size: 16),
+            tooltip: 'Kanban',
+          ),
+        ],
       ],
       selected: {mode},
       onSelectionChanged: (s) => onChanged(s.first),
