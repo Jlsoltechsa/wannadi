@@ -478,7 +478,22 @@ class PanelCard extends StatelessWidget {
           ),
         ],
       ),
-      child: child,
+      // `Material` TRANSPARENTE: no dibuja nada —ni un píxel cambia— pero da
+      // superficie de tinta a lo que va dentro.
+      //
+      // Sin él, un `ListTile` o un `InkWell` dentro de una PanelCard pintan su
+      // onda sobre el `Material` que queda DETRÁS de este `Container`, o sea
+      // por debajo de su color de fondo: el toque no da respuesta visual. El
+      // propio framework avisa ("ListTile background color or ink splashes may
+      // be invisible…"), y eran los 18 avisos que quedaban en el barrido de
+      // pantallas — 3 en `/perfil-cuenta` × 6 roles.
+      //
+      // Va en la pieza y no en esas 3 pantallas porque PanelCard se usa 157
+      // veces en 46 archivos: el resto tenía la misma trampa esperando.
+      child: Material(
+        type: MaterialType.transparency,
+        child: child,
+      ),
     );
   }
 }
