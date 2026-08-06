@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 /// entre skins (AppBar, scaffold background, acentos). Los activos de
 /// marca (logo, símbolos) se mantienen constantes.
 enum SummaPalette {
-  classic,    // navy + ámbar — la skin oficial original
+  lino,       // papel casi-blanco cálido (#FDFBF7) — skin por defecto
+  classic,    // crema navy + ámbar — la cálida original (manual v1.0), preservada
   ocean,      // azul océano + turquesa
   forest,     // verde bosque + amarillo trigo
   sunset,     // coral + lila
@@ -16,6 +17,7 @@ enum SummaPalette {
 extension SummaPaletteX on SummaPalette {
   String get id {
     switch (this) {
+      case SummaPalette.lino:     return 'lino';
       case SummaPalette.classic:  return 'classic';
       case SummaPalette.ocean:    return 'ocean';
       case SummaPalette.forest:   return 'forest';
@@ -26,7 +28,8 @@ extension SummaPaletteX on SummaPalette {
 
   String get label {
     switch (this) {
-      case SummaPalette.classic:  return 'Clásico';
+      case SummaPalette.lino:     return 'Papel';
+      case SummaPalette.classic:  return 'Crema';
       case SummaPalette.ocean:    return 'Océano';
       case SummaPalette.forest:   return 'Bosque';
       case SummaPalette.sunset:   return 'Atardecer';
@@ -41,7 +44,7 @@ extension SummaPaletteX on SummaPalette {
     for (final p in SummaPalette.values) {
       if (p.id == id) return p;
     }
-    return SummaPalette.classic;
+    return SummaPalette.lino;
   }
 }
 
@@ -99,6 +102,7 @@ class PaletteColors {
 extension PaletteColorsOf on SummaPalette {
   PaletteColors get colors {
     switch (this) {
+      case SummaPalette.lino:     return _lino;
       case SummaPalette.classic:  return _classic;
       case SummaPalette.ocean:    return _ocean;
       case SummaPalette.forest:   return _forest;
@@ -206,6 +210,44 @@ const _classic = PaletteColors(
     errorContainer: Color(0xFFFADADA), onErrorContainer: Color(0xFF1F2A4E),
     surface: Color(0xFFF4EFE5), onSurface: Color(0xFF1F2A4E),        // crema.base / navy text
     surfaceContainerHighest: Color(0xFFFAF7F0),                      // crema.light
+    onSurfaceVariant: Color(0xFF6B7592),                             // text-muted
+    outline: Color(0xFFD6D3D0), outlineVariant: Color(0xFFE3DFD9),   // bordes cálidos
+  ),
+  dark: ColorScheme(
+    brightness: Brightness.dark,
+    primary: Color(0xFF5D8BB6),  onPrimary: Color(0xFF0A1430),
+    primaryContainer: Color(0xFF1B3A5C), onPrimaryContainer: Color(0xFFA9C2DA),
+    secondary: Color(0xFFEAAA2F), onSecondary: Color(0xFF0A1430),
+    secondaryContainer: Color(0xFF4D3A18), onSecondaryContainer: Color(0xFFF4C463),
+    tertiary: Color(0xFFA9C2DA), onTertiary: Color(0xFF0A1430),
+    tertiaryContainer: Color(0xFF24375C), onTertiaryContainer: Color(0xFFA9C2DA),
+    error: Color(0xFFFF6B6B), onError: Color(0xFF0A1430),
+    errorContainer: Color(0xFF4A1818), onErrorContainer: Color(0xFFFFB3B3),
+    surface: Color(0xFF14213F), onSurface: Color(0xFFE7ECF4),
+    surfaceContainerHighest: Color(0xFF2A3550),
+    outline: Color(0xFF2D3756), outlineVariant: Color(0xFF1F2A48),
+  ),
+);
+
+// Papel — skin por defecto: casi-blanco cálido, más fresca/nativa que el crema.
+// Idéntica a _classic salvo el fondo de página (surface). El crema original se
+// preserva como la skin `classic`. El casi-blanco sigue siendo cálido
+// (R>G>B), así que respeta "cálido, nunca frío" del manual. Modo oscuro sin cambios.
+const _lino = PaletteColors(
+  brandDeep:   Color(0xFF1F2A4E),  // navy.deep
+  brandAccent: Color(0xFFEAAA2F),  // dorado.brand
+  light: ColorScheme(
+    brightness: Brightness.light,
+    primary: Color(0xFF5D8BB6),  onPrimary: Color(0xFFFFFFFF),       // azul.brand
+    primaryContainer: Color(0xFFD8E5F1), onPrimaryContainer: Color(0xFF1F2A4E),
+    secondary: Color(0xFFEAAA2F), onSecondary: Color(0xFF1F2A4E),    // dorado.brand
+    secondaryContainer: Color(0xFFFAE6BB), onSecondaryContainer: Color(0xFF1F2A4E),
+    tertiary: Color(0xFF1F2A4E), onTertiary: Color(0xFFFFFFFF),      // navy.deep
+    tertiaryContainer: Color(0xFFCDD6E5), onTertiaryContainer: Color(0xFF1F2A4E),
+    error: Color(0xFFDC2626), onError: Color(0xFFFFFFFF),            // danger
+    errorContainer: Color(0xFFFADADA), onErrorContainer: Color(0xFF1F2A4E),
+    surface: Color(0xFFFDFBF7), onSurface: Color(0xFF1F2A4E),        // papel casi-blanco cálido
+    surfaceContainerHighest: Color(0xFFFAF7F0),                      // crema.light (elevado)
     onSurfaceVariant: Color(0xFF6B7592),                             // text-muted
     outline: Color(0xFFD6D3D0), outlineVariant: Color(0xFFE3DFD9),   // bordes cálidos
   ),
