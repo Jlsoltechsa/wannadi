@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'colors.dart';
 import 'theme_tokens.dart';
 import 'modern_kit.dart';
-
+
+import 'motion.dart';
 /// Pop seguro para go_router. Si el stack tiene previo, hace `pop()` (y
 /// resuelve cualquier `await context.push(...)` del caller). Si no, mira
 /// `?from=…` en la URL actual; sino usa `fallback`.
@@ -852,7 +853,7 @@ class _RichTileState extends State<_RichTile> {
           onTap: widget.onTap,
           borderRadius: BorderRadius.circular(16),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
+            duration: SummaMotion.base,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               color: widget.selected

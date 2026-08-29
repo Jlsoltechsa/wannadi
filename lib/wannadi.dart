@@ -11,6 +11,7 @@ library;
 // Tokens semánticos y de marca por defecto.
 export 'src/colors.dart';
 export 'src/theme_tokens.dart';
+export 'src/motion.dart';
 
 // Layout / responsive helpers.
 export 'src/responsive.dart';

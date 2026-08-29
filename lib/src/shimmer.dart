@@ -45,6 +45,8 @@ class _ShimmerState extends State<Shimmer>
     super.initState();
     _ctrl = AnimationController(
       vsync: this,
+      // Bucle ambiental: no va a ningún sitio, respira. Fuera de la escala de
+      // `SummaMotion` a propósito (ver su cabecera).
       duration: const Duration(milliseconds: 1300),
     )..repeat();
   }

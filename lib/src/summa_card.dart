@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 import 'palettes.dart';
 import 'theme_tokens.dart';
-
+
+import 'motion.dart';
 /// Variante semántica de [SummaCard]. Define color de borde, tinte de
 /// fondo y color del chip de status (cuando aplica).
 enum SummaCardVariant {
@@ -160,7 +161,7 @@ class _SummaCardState extends State<SummaCard> {
         if (widget.body != null) ...[
           if (widget.collapsible)
             AnimatedSize(
-              duration: const Duration(milliseconds: 180),
+              duration: SummaMotion.base,
               curve: Curves.easeInOut,
               alignment: Alignment.topCenter,
               child: ClipRect(
@@ -194,7 +195,7 @@ class _SummaCardState extends State<SummaCard> {
     );
 
     Widget content = AnimatedContainer(
-      duration: const Duration(milliseconds: 160),
+      duration: SummaMotion.base,
       padding: pad,
       decoration: BoxDecoration(
         color: background,
@@ -304,7 +305,7 @@ class _Header extends StatelessWidget {
           const SizedBox(width: 4),
           AnimatedRotation(
             turns: expanded ? 0.0 : -0.25,
-            duration: const Duration(milliseconds: 180),
+            duration: SummaMotion.base,
             child: Icon(
               Icons.keyboard_arrow_down_rounded,
               color: cs.summaTextSub,
