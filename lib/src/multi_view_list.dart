@@ -116,6 +116,11 @@ void setMvTableBuilder(MvTableBuilder? builder) {
 class MultiViewList extends StatefulWidget {
   final String title;
   final String? subtitle;
+  /// Frase que explica la lista. Si viene, va debajo del título EN LUGAR de
+  /// la línea «N registros». `subtitle` es un sustantivo para esa línea
+  /// («estudiantes» → «30 estudiantes»); pasarle una frase pintaba «30
+  /// Marca, para cada docente…» con el número suelto delante.
+  final String? description;
   final IconData heroIcon;
   final Color heroColor;
 
@@ -172,6 +177,7 @@ class MultiViewList extends StatefulWidget {
     required this.columns,
     required this.primary,
     this.subtitle,
+    this.description,
     this.secondary,
     this.badge,
     this.metaColumns = const [],
@@ -238,6 +244,7 @@ class _MultiViewListState extends State<MultiViewList> {
           _Header(
             title: widget.title,
             subtitle: widget.subtitle,
+            description: widget.description,
             count: filtered.length,
             actionLabel: widget.actionLabel,
             onAction: widget.onAction,
@@ -396,14 +403,15 @@ class _MultiViewListState extends State<MultiViewList> {
 // ─────────────────────────────────────────────────────────────────────────────
 
 /// Cabecera canónica de las listas — alineada a `PageHeader` de la marca:
-/// fondo limpio, botón de atrás en chip, título Fraunces con la última
-/// palabra en *itálica dorada*, subtítulo de conteo y divisor inferior.
+/// fondo limpio, botón de atrás en chip, título con la barra dorada al lado
+/// (sin palabra en itálica dorada), conteo o descripción, y divisor.
 /// (NO usa el viejo ícono-avatar con degradado/sombra de color, que se veía
 /// fuera de identidad.) wannadi no puede importar `SummaDisplay`/`SummaFonts`
 /// por ser submódulo, así que hereda Fraunces del `textTheme` del tema.
 class _Header extends StatelessWidget {
   final String title;
   final String? subtitle;
+  final String? description;
   final int count;
   final String? actionLabel;
   final VoidCallback? onAction;
@@ -412,20 +420,15 @@ class _Header extends StatelessWidget {
     required this.title,
     required this.count,
     this.subtitle,
+    this.description,
     this.actionLabel,
     this.onAction,
     this.onBack,
   });
 
-  /// Realce dorado de la última palabra (igual que `SummaDisplay`):
-  /// `amberDeep` en claro (contraste AA), `amber` en oscuro.
-  static const _amberDeep = Color(0xFF9E5E00);
-
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final dark = cs.brightness == Brightness.dark;
-    final emColor = dark ? WannadiColors.amber : _amberDeep;
     return LayoutBuilder(builder: (context, c) {
       final wide = c.maxWidth >= 600;
       final iconOnlyAction = c.maxWidth < 380;
@@ -441,11 +444,6 @@ class _Header extends StatelessWidget {
         letterSpacing: -0.4,
         color: cs.summaTextPrimary,
       );
-      // Última palabra → itálica dorada (resto normal).
-      final words = title.trimRight().split(RegExp(r'\s+'));
-      final String lead =
-          words.length > 1 ? '${words.sublist(0, words.length - 1).join(' ')} ' : '';
-      final String emph = words.isEmpty ? title : words.last;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -473,26 +471,35 @@ class _Header extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text.rich(
-                  TextSpan(children: [
-                    if (lead.isNotEmpty) TextSpan(text: lead),
-                    TextSpan(
-                      text: emph,
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        color: emColor,
-                        fontWeight: base.fontWeight,
+                // Título entero en una tinta; la seña de la casa es la barra
+                // dorada, no una palabra en itálica dorada (DESIGN §0 regla
+                // 3; hallazgo 27 del QA del director, 19-nov-2026).
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 3,
+                      height: wide ? 26 : 21,
+                      margin: const EdgeInsets.only(right: 10, top: 2),
+                      decoration: BoxDecoration(
+                        color: WannadiColors.amber,
+                        borderRadius: BorderRadius.circular(2),
                       ),
                     ),
-                  ]),
-                  style: base,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: base,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '$count ${subtitle ?? "registros"}',
-                  maxLines: 1,
+                  description ?? '$count ${subtitle ?? "registros"}',
+                  maxLines: description != null ? 3 : 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: cs.summaTextSub,
