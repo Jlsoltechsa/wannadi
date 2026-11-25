@@ -149,7 +149,7 @@ of tokens that adapt automatically to the brightness of the active
 | Getter | Light value | Dark value |
 |---|---|---|
 | `summaSurface` | `surface` | `surface` |
-| `summaCard` | `#FFFFFF` | `#1C2540` |
+| `summaCard` | `#FFFFFF` | `#232E4A` |
 | `summaMuted` | `#E7ECF4` | `#2A3550` |
 | `summaBorder` | `#D9DEE9` | `#2D3756` |
 | `summaTextPrimary` | `#12182A` | `#E7ECF4` |
